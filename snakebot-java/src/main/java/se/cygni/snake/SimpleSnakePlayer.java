@@ -10,6 +10,7 @@ import se.cygni.snake.api.exception.InvalidPlayerName;
 import se.cygni.snake.api.model.GameMode;
 import se.cygni.snake.api.model.GameSettings;
 import se.cygni.snake.api.model.SnakeDirection;
+import se.cygni.snake.api.model.WorldSize;
 import se.cygni.snake.api.response.PlayerRegistered;
 import se.cygni.snake.client.AnsiPrinter;
 import se.cygni.snake.client.BaseSnakeClient;
@@ -123,8 +124,8 @@ public class SimpleSnakePlayer extends BaseSnakeClient {
     public void onConnected() {
         log.info("Connected, registering for training...");
         GameSettings gameSettings = new GameSettings.GameSettingsBuilder()
-                .withWidth(25)
-                .withHeight(25)
+                .withWidth(WorldSize.SMALL)
+                .withHeight(WorldSize.SMALL)
                 .withMaxNoofPlayers(5)
                 .build();
 
@@ -148,6 +149,6 @@ public class SimpleSnakePlayer extends BaseSnakeClient {
 
     @Override
     public GameMode getGameMode() {
-        return GameMode.training;
+        return GameMode.TRAINING;
     }
 }

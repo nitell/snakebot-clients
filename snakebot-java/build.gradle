@@ -15,8 +15,8 @@ compileJava {
 }
 
 dependencies {
-    compile 'se.cygni.snakebot:snakebot-client:0.0.6-SNAPSHOT'
-    compile 'se.cygni.snakebot:snakebot-client-util:0.0.6-SNAPSHOT'
+    compile 'se.cygni.snakebot:snakebot-client:0.0.8'
+    compile 'se.cygni.snakebot:snakebot-client-util:0.0.8'
 }
 
 task run(type:JavaExec) {
