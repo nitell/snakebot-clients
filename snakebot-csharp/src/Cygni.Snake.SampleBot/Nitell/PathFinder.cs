@@ -49,7 +49,7 @@ namespace Cygni.Snake.SampleBot.Nitell
                     return ReconstructPath(cameFrom, current);
                 openSet.Remove(current);
                 closedSet.Add(current);
-                foreach (var neighbor in GetNeighbours(current, target))
+                foreach (var neighbor in GetNeighbours(current))
                 {
                     if (closedSet.Contains(neighbor))
                         continue; // Ignore the neighbor which is already evaluated.
@@ -69,7 +69,7 @@ namespace Cygni.Snake.SampleBot.Nitell
             return null;
         }
 
-        private IEnumerable<MapCoordinate> GetNeighbours(MapCoordinate current, MapCoordinate target)
+        private IEnumerable<MapCoordinate> GetNeighbours(MapCoordinate current)
         {
             foreach (Direction direction in Enum.GetValues(typeof(Direction)))
             {

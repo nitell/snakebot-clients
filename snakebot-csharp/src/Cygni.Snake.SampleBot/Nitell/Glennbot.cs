@@ -91,7 +91,7 @@ namespace Cygni.Snake.SampleBot.Nitell
 
         private int AvoidHeadsAndWalls(Map map, MapCoordinate target)
         {
-            if (map.SnakeHeads.Any(s => s.GetManhattanDistanceTo(target) < 3))
+            if (map.Snakes.Any(s =>s.Id != map.MySnake.Id &&  s.HeadPosition.GetManhattanDistanceTo(target) < 3))
                 return 10;
 
             if (target.X == 0 || target.X == map.Width - 1 ||
