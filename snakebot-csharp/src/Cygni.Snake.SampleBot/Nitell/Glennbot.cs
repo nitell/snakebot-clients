@@ -11,7 +11,7 @@ namespace Cygni.Snake.SampleBot.Nitell
         private Map map;
         private PathFinder pathFinder;
 
-        public Glennbot() : base("Glennbot")
+        public Glennbot() : base("Glenneth")
         {
         }
 
@@ -28,6 +28,12 @@ namespace Cygni.Snake.SampleBot.Nitell
                 if (foodPath != null)
                     return Follow(foodPath);
 
+                //Go chase some other snakes tail
+                var tailPath = FindCloseTailPath();
+                if (tailPath != null)
+                    return Follow(tailPath);
+
+
                 //ohh.. we're in trouble
                 if (CanGo(Direction.Right))
                     return Direction.Right;
@@ -43,6 +49,23 @@ namespace Cygni.Snake.SampleBot.Nitell
                 Console.WriteLine(e.ToString());
                 return Direction.Down;
             }
+        }
+
+        private MapCoordinate[] FindCloseTailPath()
+        {
+            foreach (
+                var t in
+                    map.Snakes.Where(s => s.Body.Any())
+                    .Select(s => s.Body.Last()).OrderByDescending(s => s.GetManhattanDistanceTo(map.MySnake.HeadPosition)))
+            {
+                foreach (var p in pathFinder.GetNeighbours(t))
+                {
+                    var tailPath = pathFinder.FindShortestPath(map.MySnake.HeadPosition, p, AvoidHeadsAndWalls);
+                    if (tailPath != null)
+                        return tailPath;
+                }
+            }
+            return null;
         }
 
         private bool CanGo(Direction dir)
@@ -91,12 +114,12 @@ namespace Cygni.Snake.SampleBot.Nitell
 
         private int AvoidHeadsAndWalls(Map map, MapCoordinate target)
         {
-            if (map.Snakes.Any(s =>s.Id != map.MySnake.Id &&  s.HeadPosition.GetManhattanDistanceTo(target) < 3))
-                return 10;
+            if (map.Snakes.Any(s => s.Id != map.MySnake.Id && s.HeadPosition.GetManhattanDistanceTo(target) < 3))
+                return 2;
 
             if (target.X == 0 || target.X == map.Width - 1 ||
                 target.Y == 0 || target.Y == map.Height - 1)
-                return 5;
+                return 2;
 
             return 1;
         }

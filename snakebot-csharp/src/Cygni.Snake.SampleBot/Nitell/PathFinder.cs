@@ -69,7 +69,7 @@ namespace Cygni.Snake.SampleBot.Nitell
             return null;
         }
 
-        private IEnumerable<MapCoordinate> GetNeighbours(MapCoordinate current)
+        public IEnumerable<MapCoordinate> GetNeighbours(MapCoordinate current)
         {
             foreach (Direction direction in Enum.GetValues(typeof(Direction)))
             {
